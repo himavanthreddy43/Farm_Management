@@ -1,8 +1,12 @@
 
 import { motion } from 'framer-motion';
 import { Play, ArrowRight, ShieldCheck, Cpu, Smartphone } from 'lucide-react';
+import CountUp from 'react-countup';
+import { useInView } from 'react-intersection-observer';
 
 const Hero = () => {
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+
   return (
     <section className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-slate-900" id="home">
       {/* Background Media */}
@@ -72,6 +76,7 @@ const Hero = () => {
 
         {/* Trust Indicators */}
         <motion.div 
+          ref={ref}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.6 }}
@@ -79,22 +84,30 @@ const Hero = () => {
         >
           <div className="flex flex-col items-center">
             <Cpu className="w-8 h-8 text-farm-green mb-3" />
-            <h3 className="text-white font-bold text-3xl font-poppins mb-1">25+</h3>
+            <h3 className="text-white font-bold text-3xl font-poppins mb-1">
+              {inView ? <CountUp end={25} duration={2.5} /> : 0}+
+            </h3>
             <p className="text-slate-400 text-sm">AI Features</p>
           </div>
           <div className="flex flex-col items-center">
             <ShieldCheck className="w-8 h-8 text-farm-green mb-3" />
-            <h3 className="text-white font-bold text-3xl font-poppins mb-1">99%</h3>
+            <h3 className="text-white font-bold text-3xl font-poppins mb-1">
+              {inView ? <CountUp end={99} duration={2.5} /> : 0}%
+            </h3>
             <p className="text-slate-400 text-sm">Detection Accuracy</p>
           </div>
           <div className="flex flex-col items-center">
             <Smartphone className="w-8 h-8 text-farm-green mb-3" />
-            <h3 className="text-white font-bold text-3xl font-poppins mb-1">24/7</h3>
+            <h3 className="text-white font-bold text-3xl font-poppins mb-1">
+              {inView ? <CountUp end={24} duration={2.5} /> : 0}/7
+            </h3>
             <p className="text-slate-400 text-sm">Farm Monitoring</p>
           </div>
           <div className="flex flex-col items-center">
             <div className="w-8 h-8 flex items-center justify-center text-farm-green mb-3 font-bold text-xl">A/अ</div>
-            <h3 className="text-white font-bold text-3xl font-poppins mb-1">10+</h3>
+            <h3 className="text-white font-bold text-3xl font-poppins mb-1">
+              {inView ? <CountUp end={10} duration={2.5} /> : 0}+
+            </h3>
             <p className="text-slate-400 text-sm">Regional Languages</p>
           </div>
         </motion.div>

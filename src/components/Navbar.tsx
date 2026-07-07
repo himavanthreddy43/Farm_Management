@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronRight } from 'lucide-react';
+import { Menu, X, ChevronRight, LogOut, LayoutDashboard } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import { Link } from 'react-router-dom';
 
 const Navbar = ({ onOpenAuth }: { onOpenAuth: (mode: 'login' | 'signup') => void }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user, signOut } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,16 +46,34 @@ const Navbar = ({ onOpenAuth }: { onOpenAuth: (mode: 'login' | 'signup') => void
 
           {/* CTAs */}
           <div className="hidden md:flex items-center space-x-4">
-            <button 
-              onClick={() => onOpenAuth('login')}
-              className={`font-medium transition-colors ${isScrolled ? 'text-slate-600 hover:text-farm-green dark:text-slate-300' : 'text-white hover:text-white/80'}`}
-            >
-              Login
-            </button>
-            <a href="#pricing" className="bg-farm-green hover:bg-green-500 text-white px-6 py-2.5 rounded-full font-medium transition-all shadow-lg shadow-farm-green/30 flex items-center group">
-              Get Started
-              <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-            </a>
+            {user ? (
+              <>
+                <Link to="/dashboard" className="text-white bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full font-medium transition-colors flex items-center border border-white/10">
+                  <LayoutDashboard className="w-4 h-4 mr-2" />
+                  Dashboard
+                </Link>
+                <button 
+                  onClick={() => signOut()}
+                  className="text-red-400 hover:text-red-300 px-4 py-2 rounded-full font-medium transition-colors flex items-center"
+                >
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Sign Out
+                </button>
+              </>
+            ) : (
+              <>
+                <button 
+                  onClick={() => onOpenAuth('login')}
+                  className={`font-medium transition-colors ${isScrolled ? 'text-slate-600 hover:text-farm-green dark:text-slate-300' : 'text-white hover:text-white/80'}`}
+                >
+                  Login
+                </button>
+                <a href="#pricing" className="bg-farm-green hover:bg-green-500 text-white px-6 py-2.5 rounded-full font-medium transition-all shadow-lg shadow-farm-green/30 flex items-center group">
+                  Get Started
+                  <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                </a>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -74,7 +95,7 @@ const Navbar = ({ onOpenAuth }: { onOpenAuth: (mode: 'login' | 'signup') => void
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden glass-panel border-t border-white/10"
+            className="md:hidden glass-panel border-t border-white/10 overflow-hidden"
           >
             <div className="px-4 pt-2 pb-6 space-y-2 flex flex-col">
               {['Home', 'Features', 'Solutions', 'Dashboard', 'Pricing'].map((item) => (
@@ -87,18 +108,44 @@ const Navbar = ({ onOpenAuth }: { onOpenAuth: (mode: 'login' | 'signup') => void
                   {item}
                 </a>
               ))}
-              <button 
-                onClick={() => {
-                  onOpenAuth('login');
-                  setIsMobileMenuOpen(false);
-                }}
-                className="px-4 py-3 text-left text-slate-800 dark:text-slate-200 font-medium hover:bg-farm-green/10 hover:text-farm-green rounded-lg transition-colors"
-              >
-                Login
-              </button>
-              <a href="#pricing" onClick={() => setIsMobileMenuOpen(false)} className="mt-4 bg-farm-green text-white px-4 py-3 rounded-xl font-semibold shadow-lg shadow-farm-green/30 text-center w-full block">
-                Get Started
-              </a>
+              
+              {user ? (
+                <>
+                  <Link 
+                    to="/dashboard"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="px-4 py-3 text-left text-slate-800 dark:text-slate-200 font-medium hover:bg-farm-green/10 hover:text-farm-green rounded-lg transition-colors flex items-center"
+                  >
+                    <LayoutDashboard className="w-5 h-5 mr-3" />
+                    Go to Dashboard
+                  </Link>
+                  <button 
+                    onClick={() => {
+                      signOut();
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="px-4 py-3 text-left text-red-500 font-medium hover:bg-red-500/10 rounded-lg transition-colors flex items-center"
+                  >
+                    <LogOut className="w-5 h-5 mr-3" />
+                    Sign Out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button 
+                    onClick={() => {
+                      onOpenAuth('login');
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="px-4 py-3 text-left text-slate-800 dark:text-slate-200 font-medium hover:bg-farm-green/10 hover:text-farm-green rounded-lg transition-colors"
+                  >
+                    Login
+                  </button>
+                  <a href="#pricing" onClick={() => setIsMobileMenuOpen(false)} className="mt-4 bg-farm-green text-white px-4 py-3 rounded-xl font-semibold shadow-lg shadow-farm-green/30 text-center w-full block">
+                    Get Started
+                  </a>
+                </>
+              )}
             </div>
           </motion.div>
         )}

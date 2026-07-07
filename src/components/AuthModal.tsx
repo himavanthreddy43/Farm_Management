@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X } from 'lucide-react';
+import { X, Loader2 } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -10,8 +12,30 @@ interface AuthModalProps {
 
 const AuthModal = ({ isOpen, onClose, defaultMode = 'login' }: AuthModalProps) => {
   const [mode, setMode] = useState<'login' | 'signup'>(defaultMode);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { signIn, signUp } = useAuth();
+  const navigate = useNavigate();
 
   if (!isOpen) return null;
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    try {
+      if (mode === 'login') {
+        await signIn();
+      } else {
+        await signUp();
+      }
+      onClose();
+      navigate('/dashboard');
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <AnimatePresence>
@@ -28,9 +52,9 @@ const AuthModal = ({ isOpen, onClose, defaultMode = 'login' }: AuthModalProps) =
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative w-full max-w-md bg-slate-900 border border-white/10 rounded-2xl shadow-2xl overflow-hidden"
+          className="relative w-full max-w-md bg-slate-900 border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-10"
         >
-          <div className="absolute top-4 right-4 z-10">
+          <div className="absolute top-4 right-4 z-20">
             <button onClick={onClose} className="p-2 bg-white/5 rounded-full hover:bg-white/10 text-slate-400 hover:text-white transition-colors">
               <X className="w-5 h-5" />
             </button>
@@ -51,29 +75,32 @@ const AuthModal = ({ isOpen, onClose, defaultMode = 'login' }: AuthModalProps) =
               </p>
             </div>
 
-            <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-4" onSubmit={handleSubmit}>
               {mode === 'signup' && (
                 <div>
                   <label className="block text-sm font-medium text-slate-400 mb-1">Farm Name</label>
                   <input 
                     type="text" 
+                    required
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-farm-green transition-colors"
                     placeholder="Sri Laxmi Farms"
                   />
                 </div>
               )}
               <div>
-                <label className="block text-sm font-medium text-slate-400 mb-1">Email or Phone</label>
+                <label className="block text-sm font-medium text-slate-400 mb-1">Email</label>
                 <input 
-                  type="text" 
+                  type="email" 
+                  required
                   className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-farm-green transition-colors"
-                  placeholder="name@email.com or +91..."
+                  placeholder="name@email.com"
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-400 mb-1">Password</label>
                 <input 
                   type="password" 
+                  required
                   className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-farm-green transition-colors"
                   placeholder="••••••••"
                 />
@@ -85,14 +112,23 @@ const AuthModal = ({ isOpen, onClose, defaultMode = 'login' }: AuthModalProps) =
                 </div>
               )}
 
-              <button className="w-full bg-farm-green hover:bg-green-500 text-white font-semibold py-3.5 rounded-xl transition-all shadow-lg shadow-farm-green/30 mt-2">
-                {mode === 'login' ? 'Sign In' : 'Create Account'}
+              <button 
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full flex items-center justify-center bg-farm-green hover:bg-green-500 disabled:bg-green-600 disabled:cursor-not-allowed text-white font-semibold py-3.5 rounded-xl transition-all shadow-lg shadow-farm-green/30 mt-2"
+              >
+                {isSubmitting ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  mode === 'login' ? 'Sign In' : 'Create Account'
+                )}
               </button>
             </form>
 
             <div className="mt-8 text-center text-sm text-slate-400">
               {mode === 'login' ? "Don't have an account? " : "Already have an account? "}
               <button 
+                type="button"
                 onClick={() => setMode(mode === 'login' ? 'signup' : 'login')}
                 className="text-farm-green font-semibold hover:text-green-400 transition-colors"
               >

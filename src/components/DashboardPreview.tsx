@@ -3,6 +3,8 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   AreaChart, Area 
 } from 'recharts';
+import CountUp from 'react-countup';
+import { useInView } from 'react-intersection-observer';
 
 const data = [
   { name: 'Mon', eggs: 4000, mortality: 24, feed: 2400 },
@@ -15,8 +17,10 @@ const data = [
 ];
 
 const DashboardPreview = () => {
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+
   return (
-    <section className="py-24 bg-slate-900 relative" id="dashboard">
+    <section className="py-24 bg-slate-900 relative" id="dashboard" ref={ref}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-poppins font-bold text-white mb-4">Command Center for Your Farm</h2>
@@ -38,29 +42,52 @@ const DashboardPreview = () => {
             </div>
             <div className="flex space-x-3">
               <span className="bg-farm-green/20 text-farm-green px-4 py-1.5 rounded-full text-sm font-semibold border border-farm-green/30">
-                Health Score: 98/100
+                Health Score: {inView ? <CountUp end={98} duration={2.5} /> : 0}/100
               </span>
             </div>
           </div>
 
           {/* Key Metrics */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            {[
-              { label: 'Total Birds', value: '45,230', trend: '+1.2%' },
-              { label: 'Egg Production', value: '38,102', trend: '+4.5%' },
-              { label: 'Feed Stock', value: '12.4 Tons', trend: '-2.1%' },
-              { label: 'Mortality Rate', value: '0.04%', trend: '-0.01%' }
-            ].map((stat, i) => (
-              <div key={i} className="bg-white/5 border border-white/10 rounded-xl p-4">
-                <p className="text-slate-400 text-sm mb-1">{stat.label}</p>
-                <div className="flex items-end justify-between">
-                  <h4 className="text-2xl font-bold text-white">{stat.value}</h4>
-                  <span className={`text-xs font-medium ${stat.trend.startsWith('+') ? 'text-farm-green' : 'text-red-400'}`}>
-                    {stat.trend}
-                  </span>
-                </div>
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+              <p className="text-slate-400 text-sm mb-1">Total Birds</p>
+              <div className="flex items-end justify-between">
+                <h4 className="text-2xl font-bold text-white">
+                  {inView ? <CountUp end={45230} separator="," duration={2.5} /> : 0}
+                </h4>
+                <span className="text-xs font-medium text-farm-green">+1.2%</span>
               </div>
-            ))}
+            </div>
+
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+              <p className="text-slate-400 text-sm mb-1">Egg Production</p>
+              <div className="flex items-end justify-between">
+                <h4 className="text-2xl font-bold text-white">
+                  {inView ? <CountUp end={38102} separator="," duration={2.5} /> : 0}
+                </h4>
+                <span className="text-xs font-medium text-farm-green">+4.5%</span>
+              </div>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+              <p className="text-slate-400 text-sm mb-1">Feed Stock</p>
+              <div className="flex items-end justify-between">
+                <h4 className="text-2xl font-bold text-white">
+                  {inView ? <CountUp end={12.4} decimals={1} duration={2.5} /> : 0} Tons
+                </h4>
+                <span className="text-xs font-medium text-red-400">-2.1%</span>
+              </div>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+              <p className="text-slate-400 text-sm mb-1">Mortality Rate</p>
+              <div className="flex items-end justify-between">
+                <h4 className="text-2xl font-bold text-white">
+                  {inView ? <CountUp end={0.04} decimals={2} duration={2.5} /> : 0}%
+                </h4>
+                <span className="text-xs font-medium text-farm-green">-0.01%</span>
+              </div>
+            </div>
           </div>
 
           {/* Charts Area */}
