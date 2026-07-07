@@ -59,15 +59,15 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 w-full"
         >
-          <button className="bg-farm-green hover:bg-green-500 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all shadow-[0_0_40px_-10px_rgba(22,163,74,0.6)] w-full sm:w-auto flex items-center justify-center group">
+          <a href="#pricing" className="bg-farm-green hover:bg-green-500 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all shadow-[0_0_40px_-10px_rgba(22,163,74,0.6)] w-full sm:w-auto flex items-center justify-center group">
             Start Free Trial
             <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-          </button>
+          </a>
           
-          <button className="bg-white/5 hover:bg-white/10 backdrop-blur-md text-white border border-white/20 px-8 py-4 rounded-full font-semibold text-lg transition-all w-full sm:w-auto flex items-center justify-center group">
+          <a href="#features" className="bg-white/5 hover:bg-white/10 backdrop-blur-md text-white border border-white/20 px-8 py-4 rounded-full font-semibold text-lg transition-all w-full sm:w-auto flex items-center justify-center group">
             <Play className="w-5 h-5 mr-2 text-farm-green group-hover:scale-110 transition-transform" />
             Watch Demo
-          </button>
+          </a>
         </motion.div>
 
         {/* Trust Indicators */}

@@ -46,10 +46,10 @@ const Navbar = () => {
             <button className={`font-medium transition-colors ${isScrolled ? 'text-slate-600 hover:text-farm-green dark:text-slate-300' : 'text-white hover:text-white/80'}`}>
               Login
             </button>
-            <button className="bg-farm-green hover:bg-green-500 text-white px-6 py-2.5 rounded-full font-medium transition-all shadow-lg shadow-farm-green/30 flex items-center group">
+            <a href="#pricing" className="bg-farm-green hover:bg-green-500 text-white px-6 py-2.5 rounded-full font-medium transition-all shadow-lg shadow-farm-green/30 flex items-center group">
               Get Started
               <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-            </button>
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -84,9 +84,9 @@ const Navbar = () => {
                   {item}
                 </a>
               ))}
-              <button className="mt-4 bg-farm-green text-white px-4 py-3 rounded-xl font-semibold shadow-lg shadow-farm-green/30 text-center w-full">
+              <a href="#pricing" className="mt-4 bg-farm-green text-white px-4 py-3 rounded-xl font-semibold shadow-lg shadow-farm-green/30 text-center w-full block">
                 Get Started
-              </button>
+              </a>
             </div>
           </motion.div>
         )}
