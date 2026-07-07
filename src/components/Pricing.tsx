@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
 
-const Pricing = () => {
+const Pricing = ({ onOpenAuth }: { onOpenAuth: (mode: 'login' | 'signup') => void }) => {
   return (
     <section className="py-24 bg-slate-900 border-t border-white/5" id="pricing">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -32,7 +32,10 @@ const Pricing = () => {
                 </li>
               ))}
             </ul>
-            <button className="w-full bg-white/10 hover:bg-white/20 text-white font-medium py-3 rounded-xl transition-colors border border-white/10">
+            <button 
+              onClick={() => onOpenAuth('signup')}
+              className="w-full bg-white/10 hover:bg-white/20 text-white font-medium py-3 rounded-xl transition-colors border border-white/10"
+            >
               Start Free Trial
             </button>
           </motion.div>
@@ -62,7 +65,10 @@ const Pricing = () => {
                 </li>
               ))}
             </ul>
-            <button className="w-full bg-farm-green hover:bg-green-500 text-white font-medium py-3 rounded-xl transition-colors shadow-lg shadow-farm-green/30">
+            <button 
+              onClick={() => onOpenAuth('signup')}
+              className="w-full bg-farm-green hover:bg-green-500 text-white font-medium py-3 rounded-xl transition-colors shadow-lg shadow-farm-green/30"
+            >
               Get Started
             </button>
           </motion.div>

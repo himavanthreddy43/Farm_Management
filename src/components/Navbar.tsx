@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronRight } from 'lucide-react';
 
-const Navbar = () => {
+const Navbar = ({ onOpenAuth }: { onOpenAuth: (mode: 'login' | 'signup') => void }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -43,7 +43,10 @@ const Navbar = () => {
 
           {/* CTAs */}
           <div className="hidden md:flex items-center space-x-4">
-            <button className={`font-medium transition-colors ${isScrolled ? 'text-slate-600 hover:text-farm-green dark:text-slate-300' : 'text-white hover:text-white/80'}`}>
+            <button 
+              onClick={() => onOpenAuth('login')}
+              className={`font-medium transition-colors ${isScrolled ? 'text-slate-600 hover:text-farm-green dark:text-slate-300' : 'text-white hover:text-white/80'}`}
+            >
               Login
             </button>
             <a href="#pricing" className="bg-farm-green hover:bg-green-500 text-white px-6 py-2.5 rounded-full font-medium transition-all shadow-lg shadow-farm-green/30 flex items-center group">
@@ -74,7 +77,7 @@ const Navbar = () => {
             className="md:hidden glass-panel border-t border-white/10"
           >
             <div className="px-4 pt-2 pb-6 space-y-2 flex flex-col">
-              {['Home', 'Features', 'Solutions', 'Dashboard', 'Pricing', 'Login'].map((item) => (
+              {['Home', 'Features', 'Solutions', 'Dashboard', 'Pricing'].map((item) => (
                 <a 
                   key={item}
                   href={`#${item.toLowerCase()}`}
@@ -84,7 +87,16 @@ const Navbar = () => {
                   {item}
                 </a>
               ))}
-              <a href="#pricing" className="mt-4 bg-farm-green text-white px-4 py-3 rounded-xl font-semibold shadow-lg shadow-farm-green/30 text-center w-full block">
+              <button 
+                onClick={() => {
+                  onOpenAuth('login');
+                  setIsMobileMenuOpen(false);
+                }}
+                className="px-4 py-3 text-left text-slate-800 dark:text-slate-200 font-medium hover:bg-farm-green/10 hover:text-farm-green rounded-lg transition-colors"
+              >
+                Login
+              </button>
+              <a href="#pricing" onClick={() => setIsMobileMenuOpen(false)} className="mt-4 bg-farm-green text-white px-4 py-3 rounded-xl font-semibold shadow-lg shadow-farm-green/30 text-center w-full block">
                 Get Started
               </a>
             </div>
