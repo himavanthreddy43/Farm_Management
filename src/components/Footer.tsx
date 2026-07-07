@@ -43,7 +43,7 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-slate-500 text-sm">
-          <p>© 2026 Sri Laxmi Farms AI. All Rights Reserved.</p>
+          <p>© 2026 Farm Management. All Rights Reserved.</p>
           <div className="flex space-x-4 mt-4 md:mt-0">
             <a href="#" className="hover:text-white transition-colors">Twitter</a>
             <a href="#" className="hover:text-white transition-colors">LinkedIn</a>

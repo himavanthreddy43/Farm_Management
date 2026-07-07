@@ -83,7 +83,7 @@ const AuthModal = ({ isOpen, onClose, defaultMode = 'login' }: AuthModalProps) =
                     type="text" 
                     required
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-farm-green transition-colors"
-                    placeholder="Sri Laxmi Farms"
+                    placeholder="Farm Management"
                   />
                 </div>
               )}

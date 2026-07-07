@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     } else {
       // Mock login
       await new Promise(r => setTimeout(r, 1000));
-      setUser({ id: '1', email: 'farmer@srilaxmifarms.ai' } as User);
+      setUser({ id: '1', email: 'farmer@farmmanagement.ai' } as User);
     }
   };
 
@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     } else {
       // Mock signup
       await new Promise(r => setTimeout(r, 1000));
-      setUser({ id: '1', email: 'farmer@srilaxmifarms.ai' } as User);
+      setUser({ id: '1', email: 'farmer@farmmanagement.ai' } as User);
     }
   };
 
