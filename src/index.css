@@ -1,8 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@theme {
+  --color-farm-green: #16A34A;
+  --color-farm-forest: #14532D;
+  --color-farm-white: #FFFFFF;
+  --color-farm-gray: #F8FAFC;
+  --color-farm-gold: #FBBF24;
+  --font-poppins: "Poppins", sans-serif;
+  --font-inter: "Inter", sans-serif;
+}
 
 @layer base {
   body {
