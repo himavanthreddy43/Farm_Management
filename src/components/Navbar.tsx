@@ -21,10 +21,10 @@ const Navbar = () => {
           {/* Logo */}
           <div className="flex items-center space-x-3 cursor-pointer">
             <div className="w-12 h-12 bg-gradient-to-br from-farm-green to-teal-400 rounded-xl flex items-center justify-center shadow-lg shadow-farm-green/30">
-              <span className="text-white font-poppins font-bold text-2xl tracking-tighter">SL</span>
+              <span className="text-white font-poppins font-bold text-2xl tracking-tighter">FM</span>
             </div>
             <span className={`font-poppins font-bold text-2xl ${isScrolled ? 'text-slate-900 dark:text-white' : 'text-white'} transition-colors`}>
-              Sri Laxmi <span className="text-farm-green">Farms AI</span>
+              Farm_<span className="text-farm-green">management</span>
             </span>
           </div>
 
