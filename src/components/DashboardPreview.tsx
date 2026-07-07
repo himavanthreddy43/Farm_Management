@@ -94,7 +94,7 @@ const DashboardPreview = () => {
           <div className="grid md:grid-cols-2 gap-6 h-80">
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h5 className="text-slate-300 text-sm font-medium mb-4">Egg Production Trend</h5>
-              <ResponsiveContainer width="100%" height="85%">
+              <ResponsiveContainer width="100%" height={240}>
                 <AreaChart data={data}>
                   <defs>
                     <linearGradient id="colorEggs" x1="0" y1="0" x2="0" y2="1">
@@ -113,7 +113,7 @@ const DashboardPreview = () => {
             
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h5 className="text-slate-300 text-sm font-medium mb-4">Feed Consumption</h5>
-              <ResponsiveContainer width="100%" height="85%">
+              <ResponsiveContainer width="100%" height={240}>
                 <LineChart data={data}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
                   <XAxis dataKey="name" stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} />
